@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+<title id="title">Pexoluma Studio logo</title>
+<desc id="desc">Dark letter P on a mint green rounded square with a small sparkle</desc>
+<rect width="64" height="64" rx="17" fill="#c8fb7b"/>
+<path fill="#10211d" fill-rule="evenodd" d="M16 12h17c10.5 0 17 5.8 17 14.5S43.5 41 33 41h-6v11H16V12zm11 9v11h6c4 0 6-2 6-5.5S37 21 33 21h-6z"/>
+<path fill="#10211d" d="M49.5 6.5 51 11l4.5 1.5L51 14l-1.5 4.5L48 14l-4.5-1.5L48 11z" opacity=".8"/>
+</svg>
