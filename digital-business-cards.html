@@ -66,6 +66,7 @@ footer{border-top:1px solid var(--line);padding:30px 0;color:var(--muted);font-s
 .how-section{padding:10px 0 52px}.how-header{max-width:720px;margin:0 auto 23px;text-align:center}.how-header h2{font-size:clamp(1.65rem,3vw,2.35rem);margin:8px 0}.how-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}.how-step{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:21px}.how-number{display:grid;place-items:center;width:38px;height:38px;background:var(--accent);border-radius:12px;color:#111f23;font-weight:900;margin-bottom:14px}.how-step h3{font-size:1.04rem;margin:0 0 9px}.how-step p{color:var(--muted);font-size:.9rem;margin:0}.how-note{margin-top:18px;padding:14px 18px;border-radius:13px;background:#21324a;border:1px solid #455d77;color:#e5eef8;font-size:.9rem}@media(max-width:850px){.how-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:520px){.how-grid{grid-template-columns:1fr}}
 .brand-logo-mark{display:block;width:39px;height:39px;flex:none;border-radius:11px}
 </style>
+<script src="language.js" defer></script>
 </head>
 <body>
 <header><div class="container"><a class="brand" href="index.html"><img class="brand-logo-mark" src="logo.svg" width="39" height="39" alt="" aria-hidden="true">Pexoluma Studio</a><nav><a href="index.html">Home</a><a href="products.html">Products</a><a id="staffAccessLink" href="card-admin.html" aria-label="Staff Access — private card code manager">Staff Access</a></nav></div></header>
@@ -95,7 +96,7 @@ footer{border-top:1px solid var(--line);padding:30px 0;color:var(--muted);font-s
 </section>
 <section id="viewer" class="hidden" style="max-width:620px;margin:auto" aria-label="Shared digital business card"><div id="publicCard" class="business-card"></div><div class="public-actions"><button class="button" id="downloadVcard" type="button">📇 Save contact</button><button class="button secondary" id="shareCard" type="button">🔗 Share card</button><button class="button secondary" id="copyPublicLink" type="button">Copy link</button></div><p class="tiny" style="margin-top:17px">This card is shared by its owner. Viewers can see and save the contact information, but cannot edit it. Anyone with this link can view it.</p><div id="viewerNotice" role="status" aria-live="polite"></div></section>
 </div>
-</main><footer><div class="container">© <span id="year"></span> Pexoluma Studio. Digital card creator · <a href="products.html">Our digital products</a> · <a id="staffFooterLink" href="card-admin.html">Staff Access</a></div></footer>
+</main><footer><div class="container">© <span id="year"></span> Pexoluma Studio. Digital card creator · <a href="products.html">Our digital products</a> · <a id="staffFooterLink" href="card-admin.html">Staff Access</a></div> <div class="ps-legal-footer" style="max-width:1120px;margin:12px auto 0;padding:0 20px;font-size:12px"><a href="terms.html" style="color:inherit;text-decoration:underline">Terms &amp; Conditions</a> · All Pexoluma Studio payments are in GBP (£) only.</div></footer>
 <script>
 (function(){
 'use strict';
