@@ -64,7 +64,7 @@ footer{border-top:1px solid var(--line);padding:30px 0;color:var(--muted);font-s
 </style>
 </head>
 <body>
-<header><div class="container"><a class="brand" href="index.html"><span class="mark">P</span>Pexoluma Studio</a><nav><a href="index.html">Home</a><a href="products.html">Products</a></nav></div></header>
+<header><div class="container"><a class="brand" href="index.html"><span class="mark">P</span>Pexoluma Studio</a><nav><a href="index.html">Home</a><a href="products.html">Products</a><a id="staffAccessLink" href="card-admin.html" aria-label="Staff Access — private card code manager">Staff Access</a></nav></div></header>
 <main>
 <section class="hero" id="hero"><div class="container"><div class="eyebrow">Digital business cards · Pexoluma Studio</div><h1 id="headline">Your business. <em>One beautiful card.</em></h1><p class="lead" id="intro">Create your digital contact card with a private access code, then share one link with customers. Anyone you share it with can view and save your details, but they cannot edit your card.</p><div class="chips" id="benefits"><span class="chip">🔐 Creator code required</span><span class="chip">🔗 Shareable link</span><span class="chip">📇 Save to contacts</span><span class="chip">📱 Mobile-friendly</span></div></div></section>
 <div class="container app">
@@ -89,7 +89,7 @@ footer{border-top:1px solid var(--line);padding:30px 0;color:var(--muted);font-s
 </section>
 <section id="viewer" class="hidden" style="max-width:620px;margin:auto" aria-label="Shared digital business card"><div id="publicCard" class="business-card"></div><div class="public-actions"><button class="button" id="downloadVcard" type="button">📇 Save contact</button><button class="button secondary" id="shareCard" type="button">🔗 Share card</button><button class="button secondary" id="copyPublicLink" type="button">Copy link</button></div><p class="tiny" style="margin-top:17px">This card is shared by its owner. Viewers can see and save the contact information, but cannot edit it. Anyone with this link can view it.</p><div id="viewerNotice" role="status" aria-live="polite"></div></section>
 </div>
-</main><footer><div class="container">© <span id="year"></span> Pexoluma Studio. Digital card creator · <a href="products.html">Our digital products</a></div></footer>
+</main><footer><div class="container">© <span id="year"></span> Pexoluma Studio. Digital card creator · <a href="products.html">Our digital products</a> · <a id="staffFooterLink" href="card-admin.html">Staff Access</a></div></footer>
 <script>
 (function(){
 'use strict';
@@ -119,7 +119,7 @@ async function copy(text){if(navigator.clipboard&&window.isSecureContext){await 
 async function share(url,title){if(navigator.share){try{await navigator.share({title:title||'My digital business card',url:url});return}catch(e){if(e.name==='AbortError')return}}await copy(url)}
 by('year').textContent=new Date().getFullYear();
 var cardId=new URLSearchParams(location.search).get('card');
-if(cardId){visible('gate',false);visible('viewer',true);by('headline').textContent='Digital business card';by('intro').textContent='View the contact details below or save them to your contacts.';visible('benefits',false);var m=document.createElement('meta');m.name='robots';m.content='noindex,nofollow';document.head.append(m);api('/public/'+encodeURIComponent(cardId),'GET').then(function(r){viewCard=r.card;render(viewCard,by('publicCard'));document.title=(viewCard.name||'Contact')+' | Digital business card'}).catch(function(e){notice('viewerNotice',e.message,'error')})}
+if(cardId){by('staffAccessLink').hidden=true;by('staffFooterLink').hidden=true;visible('gate',false);visible('viewer',true);by('headline').textContent='Digital business card';by('intro').textContent='View the contact details below or save them to your contacts.';visible('benefits',false);var m=document.createElement('meta');m.name='robots';m.content='noindex,nofollow';document.head.append(m);api('/public/'+encodeURIComponent(cardId),'GET').then(function(r){viewCard=r.card;render(viewCard,by('publicCard'));document.title=(viewCard.name||'Contact')+' | Digital business card'}).catch(function(e){notice('viewerNotice',e.message,'error')})}
 else{visible('gate',true);visible('viewer',false)}
 by('unlockForm').addEventListener('submit',async function(e){e.preventDefault();by('unlockButton').disabled=true;try{var entered=val('accessCode').toUpperCase(),result=await api('/creator/unlock','POST',{code:entered});code=entered;visible('gate',false);visible('editor',true);putCard(result.card);if(result.card_id){shareUrl='https://pexolumastudio.com/digital-business-cards.html?card='+encodeURIComponent(result.card_id);by('shareLink').value=shareUrl;visible('savedOptions',true)}else visible('savedOptions',false)}catch(err){notice('gateNotice',err.message,'error')}finally{by('unlockButton').disabled=false}});
 by('cardForm').addEventListener('input',refresh);by('cardForm').addEventListener('change',refresh);
