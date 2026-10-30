@@ -1,4 +1,5 @@
-<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#0b1022"><title>Card Access Code Manager | Pexoluma Studio</title>
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#0b1022">
+<link rel="icon" type="image/svg+xml" href="logo.svg" sizes="any"><title>Card Access Code Manager | Pexoluma Studio</title>
 <style>
 :root{--bg:#0b1022;--ink:#f3f7ff;--muted:#b5c5d9;--panel:#162238;--line:#394a62;--lime:#c8fb7b}
 *{box-sizing:border-box}body{background:var(--bg);color:var(--ink);margin:0;font:16px/1.6 system-ui,"Segoe UI",sans-serif}
@@ -9,8 +10,9 @@ input{width:100%;padding:13px 14px;background:#0b1426;border:1px solid #65748e;b
 .code{font:700 1.25rem ui-monospace,monospace;overflow-wrap:anywhere;padding:15px;border:1px solid var(--lime);background:#102a25;border-radius:11px;letter-spacing:.07em}
 table{width:100%;border-collapse:collapse;font-size:.89rem}th,td{padding:11px;text-align:left;border-bottom:1px solid #46536a;overflow-wrap:anywhere}th{color:var(--muted);font-size:.78rem}td button{padding:6px 9px;font-size:.78rem}
 p{margin:0 0 15px}
+header a.brand{display:inline-flex;align-items:center;gap:10px}.site-logo-mark{width:38px;height:38px;display:block;flex:none;border-radius:10px}
 </style></head><body>
-<header><div class="wrap"><a class="brand" href="index.html">Pexo<span>luma</span> Studio</a><span style="float:right;color:var(--muted)">Private staff tools</span></div></header>
+<header><div class="wrap"><a class="brand" href="index.html"><img class="site-logo-mark" src="logo.svg" width="38" height="38" alt="" aria-hidden="true">Pexo<span>luma</span> Studio</a><span style="float:right;color:var(--muted)">Private staff tools</span></div></header>
 <main class="wrap"><div class="sub">Digital business card creator</div><h1>Access code manager</h1>
 <p class="muted">Only Pexoluma Studio staff with the private master key can issue new creator codes. Give each paying customer their own code so they can create and edit their card.</p>
 <section class="card" id="staffGate"><h2>Staff verification</h2><label for="staffKey">Your private master key</label><input type="password" id="staffKey" placeholder="Paste your private staff key" autocomplete="off"><div class="row"><button type="button" id="verify">Access code manager →</button></div><p class="muted" style="font-size:.85rem;margin-top:13px">This key is not saved to your browser. Keep it private and never send it to customers.</p><div id="loginMessage" aria-live="polite"></div></section>
