@@ -1,0 +1,39 @@
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#0b1022"><title>Card Access Code Manager | Pexoluma Studio</title>
+<style>
+:root{--bg:#0b1022;--ink:#f3f7ff;--muted:#b5c5d9;--panel:#162238;--line:#394a62;--lime:#c8fb7b}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--ink);margin:0;font:16px/1.6 system-ui,"Segoe UI",sans-serif}
+a{color:var(--lime)}.wrap{max-width:850px;margin:auto;padding:28px 20px}h1,h2{line-height:1.15;letter-spacing:-.04em}header{border-bottom:1px solid var(--line)}.brand{font-weight:850;text-decoration:none;font-size:1.3rem}.brand span{color:var(--lime)}.sub{font-size:.8rem;text-transform:uppercase;letter-spacing:.16em;color:var(--lime);font-weight:850}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:27px;margin:20px 0}.muted{color:var(--muted)}label{display:block;margin:13px 0 6px;font-weight:700}
+input{width:100%;padding:13px 14px;background:#0b1426;border:1px solid #65748e;border-radius:12px;color:#fff;font:inherit}button{cursor:pointer;font:inherit;font-weight:800;padding:12px 18px;border-radius:12px;background:var(--lime);border:0;color:#0b1824}button:disabled{opacity:.6;cursor:not-allowed}
+.btn2{background:transparent;color:#fff;border:1px solid #687995}.row{display:flex;flex-wrap:wrap;gap:10px;margin-top:17px}.hidden{display:none}.notice{margin:15px 0;padding:12px;border:1px solid #617e69;background:#294439;border-radius:10px}.error{background:#422630;border-color:#ae6c76}
+.code{font:700 1.25rem ui-monospace,monospace;overflow-wrap:anywhere;padding:15px;border:1px solid var(--lime);background:#102a25;border-radius:11px;letter-spacing:.07em}
+table{width:100%;border-collapse:collapse;font-size:.89rem}th,td{padding:11px;text-align:left;border-bottom:1px solid #46536a;overflow-wrap:anywhere}th{color:var(--muted);font-size:.78rem}td button{padding:6px 9px;font-size:.78rem}
+p{margin:0 0 15px}
+</style></head><body>
+<header><div class="wrap"><a class="brand" href="index.html">Pexo<span>luma</span> Studio</a><span style="float:right;color:var(--muted)">Private staff tools</span></div></header>
+<main class="wrap"><div class="sub">Digital business card creator</div><h1>Access code manager</h1>
+<p class="muted">Only Pexoluma Studio staff with the private master key can issue new creator codes. Give each paying customer their own code so they can create and edit their card.</p>
+<section class="card" id="staffGate"><h2>Staff verification</h2><label for="staffKey">Your private master key</label><input type="password" id="staffKey" placeholder="Paste your private staff key" autocomplete="off"><div class="row"><button type="button" id="verify">Access code manager →</button></div><p class="muted" style="font-size:.85rem;margin-top:13px">This key is not saved to your browser. Keep it private and never send it to customers.</p><div id="loginMessage" aria-live="polite"></div></section>
+<section id="staffPanel" class="hidden">
+<div class="card"><h2>Generate a customer's creator code</h2><p class="muted">Enter a label for your records, such as the business name. Each code gives access to one customer's card editor.</p><label for="customerLabel">Customer or business name</label><input id="customerLabel" maxlength="90" placeholder="Example Coffee Shop">
+<div class="row"><button type="button" id="generate">Generate access code</button><button type="button" class="btn2" id="refresh">Refresh code list</button></div><div id="generated" class="hidden"><p style="margin:18px 0 8px">New creator code (shown only once):</p><div class="code" id="newCode"></div><div class="row"><button type="button" id="copyNew">Copy customer code</button></div><p class="muted" style="font-size:.86rem;margin-top:14px">Send this code only to the customer who should edit the card. It is not a viewing password.</p></div><div id="actionMessage" aria-live="polite"></div></div>
+<div class="card"><h2>Issued codes</h2><p class="muted">You can see which business each code belongs to, whether its card has been created, and revoke editing access if needed. The original codes cannot be retrieved.</p><div style="overflow-x:auto"><table><thead><tr><th>Business</th><th>Card</th><th>Status</th><th>Action</th></tr></thead><tbody id="codeRows"><tr><td colspan="4">Loading…</td></tr></tbody></table></div></div>
+<button type="button" class="btn2" id="signout">Lock staff dashboard</button>
+</section>
+<p class="muted" style="font-size:.87rem;margin-top:28px">A shared business card link is read-only. Anyone with that link can view the contact details, but cannot access the creator editor without a valid code. No automatic payment processing is included; issue codes only after your customer's order is paid and approved.</p>
+</main><script>
+(function(){'use strict';var API='https://pexoluma-card-api.lukakrivosic100.workers.dev',secret='';
+function q(id){return document.getElementById(id)}
+function show(id,yes){q(id).classList.toggle('hidden',!yes)}
+function status(id,msg,err){q(id).textContent=msg;q(id).className=msg?'notice'+(err?' error':''):''}
+async function api(path,body){var res=await fetch(API+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({admin:secret},body||{}))}),data=await res.json();if(!res.ok)throw Error(data.error||'Request failed');return data}
+async function load(){var data=await api('/admin/list'),tbody=q('codeRows');tbody.replaceChildren();if(!data.records.length){var tr=document.createElement('tr'),td=document.createElement('td');td.colSpan=4;td.textContent='No codes issued yet.';tr.append(td);tbody.append(tr);return}
+data.records.forEach(function(rec){var tr=document.createElement('tr');function cell(text){var td=document.createElement('td');td.textContent=text;tr.append(td);return td}cell(rec.label);cell(rec.card_id?'Created':'Not yet created');cell(rec.revoked?'Revoked':'Active');var td=document.createElement('td');if(!rec.revoked){var b=document.createElement('button');b.type='button';b.className='btn2';b.textContent='Revoke';b.onclick=async function(){if(!confirm('Revoke editing access for '+rec.label+'? The already shared card will remain visible.'))return;try{await api('/admin/revoke',{code_hash:rec.code_hash});await load()}catch(e){status('actionMessage',e.message,true)}};td.append(b)}tr.append(td);tbody.append(tr)})
+}
+q('verify').onclick=async function(){secret=q('staffKey').value.trim();if(!secret){status('loginMessage','Enter your private master key.',true);return}q('verify').disabled=true;try{await load();show('staffGate',false);show('staffPanel',true);q('staffKey').value=''}catch(e){status('loginMessage','Access denied or service unavailable: '+e.message,true);secret=''}finally{q('verify').disabled=false}};
+q('generate').onclick=async function(){q('generate').disabled=true;try{var r=await api('/admin/create',{label:q('customerLabel').value.trim()||'New business'});q('newCode').textContent=r.code;show('generated',true);q('customerLabel').value='';status('actionMessage','Code issued. Copy it now and give it to your customer.');await load()}catch(e){status('actionMessage',e.message,true)}finally{q('generate').disabled=false}};
+q('copyNew').onclick=async function(){try{await navigator.clipboard.writeText(q('newCode').textContent);status('actionMessage','Code copied.')}catch(e){status('actionMessage','Select and copy the code shown above.')}};
+q('refresh').onclick=async function(){try{await load()}catch(e){status('actionMessage',e.message,true)}};
+q('signout').onclick=function(){secret='';q('newCode').textContent='';show('generated',false);show('staffPanel',false);show('staffGate',true);status('loginMessage','Dashboard locked.')};
+})();
+</script></body></html>
