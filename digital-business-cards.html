@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b1022">
+<meta name="description" content="Create and share a beautiful digital business card with Pexoluma Studio. Private creator codes and read-only card links.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://pexolumastudio.com/digital-business-cards.html">
+<meta property="og:title" content="Digital Business Cards | Pexoluma Studio">
+<meta property="og:description" content="Create and share digital business cards with an easy contact-saving link.">
+<meta property="og:type" content="website">
+<title>Digital Business Card Creator | Pexoluma Studio</title>
+<style>
+:root{--bg:#0b1022;--surface:#151f34;--line:#37445b;--ink:#f5f8ff;--muted:#b4c3d8;--accent:#c8fb7b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+button,input,textarea,select{font:inherit}a{color:inherit}a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.container{max-width:1160px;margin:auto;padding:0 22px}
+header{border-bottom:1px solid var(--line);background:#0b1022ee;position:sticky;top:0;z-index:10;backdrop-filter:blur(12px)}
+header .container{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{display:flex;gap:10px;align-items:center;text-decoration:none;font-size:1.25rem;font-weight:850;letter-spacing:-.04em}
+.mark{display:grid;place-items:center;width:39px;height:39px;border-radius:11px;background:var(--accent);color:#0b1022;font-weight:950;font-size:1.45rem}
+nav{display:flex;gap:18px;color:var(--muted);font-size:.91rem;font-weight:650}nav a{text-decoration:none}nav a:hover{color:var(--accent)}
+.hero{padding:62px 0 38px;background:radial-gradient(circle at 83% 20%,#7fb0e418,transparent 34%),radial-gradient(circle at 8% 80%,#9cd18b11,transparent 42%)}
+.eyebrow{font-size:.76rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:800}
+h1,h2,h3{line-height:1.16;letter-spacing:-.04em;margin:0 0 15px}h1{font-size:clamp(2.4rem,6vw,4.5rem);margin-top:12px}h1 em{font-style:normal;color:var(--accent)}
+p{margin:0 0 17px}.lead{color:var(--muted);max-width:700px;font-size:1.12rem}
+.chips{display:flex;gap:10px;flex-wrap:wrap}.chip{font-size:.82rem;border:1px solid #45516a;border-radius:30px;padding:6px 12px;color:#d9e8f4}
+.app{padding:20px 0 70px}.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(340px,.95fr);gap:25px;align-items:start}
+.panel{border:1px solid var(--line);background:var(--surface);border-radius:22px;padding:27px}
+.panel h2{font-size:1.8rem}
+.muted{color:var(--muted)}.tiny{font-size:.82rem;color:var(--muted)}
+label{display:block;margin:13px 0 6px;font-weight:750;font-size:.86rem}
+input,textarea,select{display:block;background:#10182a;color:#fff;width:100%;border:1px solid #526079;border-radius:11px;padding:12px 13px;outline:none}
+textarea{resize:vertical;min-height:85px}input:focus,textarea:focus,select:focus{border-color:var(--accent)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.button{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 19px;text-align:center;border:0;background:var(--accent);color:#152021;text-decoration:none;border-radius:12px;font-weight:850;cursor:pointer}
+.button.secondary{background:transparent;color:#e9f2f9;border:1px solid #718198}
+.button:disabled{opacity:.55;cursor:not-allowed}.buttons{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0}
+.notice{padding:13px 15px;border-radius:12px;background:#223047;border:1px solid #3c5068;color:#e9eff9;margin:16px 0;font-size:.91rem}
+.notice.error{background:#45252f;border-color:#b86673}.notice.success{background:#223d34;border-color:#78c9a0}
+.hidden{display:none!important}
+.preview-panel{position:sticky;top:96px}.preview-panel>h2{font-size:1.28rem;margin:0 0 15px}
+.business-card{color:#eff8ff;background:linear-gradient(145deg,#1e2941,#0c1223);border:1px solid #485b71;border-radius:27px;padding:28px;min-height:420px;box-shadow:0 21px 45px #0005;position:relative;overflow:hidden}
+.business-card:before{content:"";position:absolute;right:-120px;top:-130px;width:300px;height:300px;border-radius:50%;background:var(--card-color,#c8fb7b);opacity:.11}
+.business-card.ocean{background:linear-gradient(140deg,#104368,#10172d)}
+.business-card.forest{background:linear-gradient(140deg,#214939,#0e2523)}
+.business-card.light{background:linear-gradient(145deg,#edf4ee,#d4e6dc);color:#1b2c32}
+.business-card.light .detail,.business-card.light .subtitle{color:#40535d}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.avatar{display:grid;place-items:center;height:72px;width:72px;border-radius:22px;background:var(--card-color,#c8fb7b);color:#11211a;font-size:1.7rem;font-weight:900}
+.card-brand{font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;font-weight:850;opacity:.75}
+.card-name{font-size:clamp(1.75rem,3vw,2.35rem);font-weight:850;letter-spacing:-.055em;line-height:1.15;margin:30px 0 4px;overflow-wrap:anywhere}
+.subtitle{color:#cbd7e8;overflow-wrap:anywhere}
+.business-name{font-weight:800;margin-top:17px;color:var(--card-color,#c8fb7b);overflow-wrap:anywhere}
+.card-about{margin:18px 0;color:inherit;white-space:pre-line;opacity:.88;font-size:.93rem;overflow-wrap:anywhere}
+.details{display:grid;gap:10px;margin-top:24px}.detail{display:flex;align-items:center;gap:12px;background:#ffffff0e;border:1px solid #ffffff19;padding:11px 13px;border-radius:11px;font-size:.91rem;color:#e6eef8;text-decoration:none;overflow-wrap:anywhere}
+.detail:hover{border-color:var(--card-color,#c8fb7b)}
+.detail span:first-child{font-size:1.2rem;min-width:24px;text-align:center}
+.public-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}
+.info{margin-top:20px;border-top:1px solid #30415a;padding-top:25px;color:var(--muted);font-size:.91rem}
+footer{border-top:1px solid var(--line);padding:30px 0;color:var(--muted);font-size:.9rem}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.preview-panel{position:static}.hero{padding-top:42px}}
+@media(max-width:520px){.two{grid-template-columns:1fr}.panel{padding:20px}nav{gap:10px;font-size:.82rem}h1{font-size:2.35rem}}
+</style>
+</head>
+<body>
+<header><div class="container"><a class="brand" href="index.html"><span class="mark">P</span>Pexoluma Studio</a><nav><a href="index.html">Home</a><a href="products.html">Products</a></nav></div></header>
+<main>
+<section class="hero" id="hero"><div class="container"><div class="eyebrow">Digital business cards · Pexoluma Studio</div><h1 id="headline">Your business. <em>One beautiful card.</em></h1><p class="lead" id="intro">Create your digital contact card with a private access code, then share one link with customers. Anyone you share it with can view and save your details, but they cannot edit your card.</p><div class="chips" id="benefits"><span class="chip">🔐 Creator code required</span><span class="chip">🔗 Shareable link</span><span class="chip">📇 Save to contacts</span><span class="chip">📱 Mobile-friendly</span></div></div></section>
+<div class="container app">
+<section id="gate" class="panel" style="max-width:550px;margin:auto"><div class="eyebrow">Creator access</div><h2>Have a card access code?</h2><p class="muted">Enter the code given to you by Pexoluma Studio to create or update your own card. Only authorised code holders can use the editor.</p><form id="unlockForm"><label for="accessCode">Your access code</label><input id="accessCode" name="accessCode" placeholder="PXL-XXXXXX-XXXXXX" autocomplete="off" maxlength="19" required><div class="buttons"><button class="button" type="submit" id="unlockButton">Unlock my editor →</button></div></form><p class="tiny">Codes are issued by Pexoluma Studio after your order is approved. No sign-up account is required.</p><div id="gateNotice" role="status" aria-live="polite"></div><div class="info">Need a business card created for you? <a href="https://form.jotform.com/263006040386045" target="_blank" rel="noopener noreferrer">Enquire about our £1 one-time card service ↗</a></div></section>
+<section id="editor" class="layout hidden" aria-label="Digital card editor">
+<div class="panel">
+<div class="eyebrow">Unlocked · Personal card editor</div><h2>Make your business card</h2><p class="muted">Edit the fields below and see your design update instantly. Your details only become visible to others through the link you share.</p>
+<form id="cardForm">
+<div class="two"><div><label for="name">Your name *</label><input id="name" maxlength="170" required placeholder="Alex Morgan"></div><div><label for="business">Business name</label><input id="business" maxlength="170" placeholder="Example Studio"></div></div>
+<label for="title">Job title</label><input id="title" maxlength="170" placeholder="Owner / Designer">
+<div class="two"><div><label for="phone">Business phone</label><input id="phone" maxlength="170" inputmode="tel" placeholder="+44 7700 900000"></div><div><label for="email">Business email</label><input id="email" maxlength="170" type="email" placeholder="hello@example.com"></div></div>
+<label for="website">Website</label><input id="website" maxlength="170" placeholder="https://yourbusiness.com" inputmode="url">
+<div class="two"><div><label for="instagram">Instagram profile link</label><input id="instagram" maxlength="170" placeholder="https://instagram.com/yourname"></div><div><label for="linkedin">LinkedIn profile link</label><input id="linkedin" maxlength="170" placeholder="https://linkedin.com/in/yourname"></div></div>
+<label for="location">Business location</label><input id="location" maxlength="170" placeholder="London, UK">
+<label for="about">Short description</label><textarea id="about" maxlength="400" placeholder="A little about your business..."></textarea>
+<div class="two"><div><label for="theme">Card theme</label><select id="theme"><option value="midnight">Midnight</option><option value="ocean">Ocean blue</option><option value="forest">Forest green</option><option value="light">Light & clean</option></select></div><div><label for="color">Accent colour</label><input id="color" type="color" value="#c8fb7b" style="height:50px;padding:6px"></div></div>
+<div class="buttons"><button class="button" type="submit" id="saveButton">Save & generate sharing link →</button><button type="button" id="lockButton" class="button secondary">Lock editor</button></div></form>
+<div id="editorNotice" role="status" aria-live="polite"></div>
+<div id="savedOptions" class="hidden"><label for="shareLink">Your card sharing link</label><input id="shareLink" readonly aria-label="Shareable card URL"><div class="buttons"><button class="button" type="button" id="copyLink">Copy link</button><button class="button secondary" type="button" id="openLink">See visitor view ↗</button><button class="button secondary" type="button" id="shareFromEditor">Share</button></div></div>
+</div>
+<div class="preview-panel"><h2>Live card preview</h2><div id="editorCard" class="business-card" aria-label="Preview of your digital business card"></div><p class="tiny" style="margin-top:12px">Please only include business contact details you're happy to share publicly with anyone who has your card link.</p></div>
+</section>
+<section id="viewer" class="hidden" style="max-width:620px;margin:auto" aria-label="Shared digital business card"><div id="publicCard" class="business-card"></div><div class="public-actions"><button class="button" id="downloadVcard" type="button">📇 Save contact</button><button class="button secondary" id="shareCard" type="button">🔗 Share card</button><button class="button secondary" id="copyPublicLink" type="button">Copy link</button></div><p class="tiny" style="margin-top:17px">This card is shared by its owner. Viewers can see and save the contact information, but cannot edit it. Anyone with this link can view it.</p><div id="viewerNotice" role="status" aria-live="polite"></div></section>
+</div>
+</main><footer><div class="container">© <span id="year"></span> Pexoluma Studio. Digital card creator · <a href="products.html">Our digital products</a></div></footer>
+<script>
+(function(){
+'use strict';
+var API='https://pexoluma-card-api.lukakrivosic100.workers.dev';
+var keys=['name','business','title','phone','email','website','instagram','linkedin','location','about','theme','color'];
+var code='',shareUrl='',viewCard=null;
+function by(id){return document.getElementById(id)}
+function visible(id,on){by(id).classList.toggle('hidden',!on)}
+function notice(id,message,kind){var p=by(id);p.textContent=message;p.className='notice '+(kind||'');if(!message)p.className=''}
+function val(k){return (by(k)&&by(k).value||'').trim()}
+function getCard(){var c={};keys.forEach(function(k){c[k]=val(k)});['website','instagram','linkedin'].forEach(function(k){if(c[k]&&!/^https:\/\//i.test(c[k]))c[k]='https://'+c[k]});return c}
+function putCard(c){keys.forEach(function(k){if(by(k))by(k).value=c&&c[k]||((k==='color')?'#c8fb7b':(k==='theme'?'midnight':''))});refresh()}
+async function api(path,method,body){var options={method:method||'GET',headers:{'Content-Type':'application/json'}};if(body)options.body=JSON.stringify(body);var res=await fetch(API+path,options),data=await res.json();if(!res.ok)throw Error(data.error||'Something went wrong');return data}
+function link(href,ico,label){var a=document.createElement('a');a.className='detail';a.href=href;a.target=href.startsWith('http')?'_blank':'_self';if(a.target==='_blank')a.rel='noopener noreferrer';var i=document.createElement('span');i.textContent=ico;var t=document.createElement('span');t.textContent=label;a.append(i,t);return a}
+function render(card,el){el.replaceChildren();el.className='business-card '+(card.theme||'midnight');el.style.setProperty('--card-color',card.color||'#c8fb7b');
+var top=document.createElement('div');top.className='card-top';var av=document.createElement('div');av.className='avatar';av.textContent=(card.name||'Your Name').trim().split(/\s+/).slice(0,2).map(function(x){return x.charAt(0).toUpperCase()}).join('')||'P';var tag=document.createElement('span');tag.className='card-brand';tag.textContent='Digital business card';top.append(av,tag);el.append(top);
+var name=document.createElement('div');name.className='card-name';name.textContent=card.name||'Your Name';el.append(name);
+if(card.title){var title=document.createElement('div');title.className='subtitle';title.textContent=card.title;el.append(title)}
+if(card.business){var biz=document.createElement('div');biz.className='business-name';biz.textContent=card.business;el.append(biz)}
+if(card.about){var about=document.createElement('p');about.className='card-about';about.textContent=card.about;el.append(about)}
+var list=document.createElement('div');list.className='details';if(card.phone)list.append(link('tel:'+card.phone.replace(/[^\d+]/g,''),'📞',card.phone));if(card.email)list.append(link('mailto:'+card.email,'✉️',card.email));if(card.website&&/^https:\/\//i.test(card.website))list.append(link(card.website,'🌐',card.website.replace(/^https:\/\//i,'')));if(card.instagram&&/^https:\/\//i.test(card.instagram))list.append(link(card.instagram,'📷','Instagram'));if(card.linkedin&&/^https:\/\//i.test(card.linkedin))list.append(link(card.linkedin,'💼','LinkedIn'));if(card.location)list.append(link('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(card.location),'📍',card.location));el.append(list)
+}
+function refresh(){render(getCard(),by('editorCard'))}
+function escapedVcard(s){return String(s||'').replace(/\\/g,'\\\\').replace(/\r?\n/g,'\\n').replace(/;/g,'\\;').replace(/,/g,'\\,')}
+function vcard(c){var nm=(c.name||'').trim().split(/\s+/),last=nm.length>1?nm.pop():'';var lines=['BEGIN:VCARD','VERSION:3.0','N:'+escapedVcard(last)+';'+escapedVcard(nm.join(' '))+';;;','FN:'+escapedVcard(c.name)];if(c.business)lines.push('ORG:'+escapedVcard(c.business));if(c.title)lines.push('TITLE:'+escapedVcard(c.title));if(c.phone)lines.push('TEL;TYPE=WORK,VOICE:'+escapedVcard(c.phone));if(c.email)lines.push('EMAIL;TYPE=INTERNET:'+escapedVcard(c.email));if(c.website)lines.push('URL:'+escapedVcard(c.website));if(c.location)lines.push('ADR;TYPE=WORK:;;'+escapedVcard(c.location)+';;;;');if(c.about)lines.push('NOTE:'+escapedVcard(c.about));lines.push('END:VCARD');return lines.join('\r\n')+'\r\n'}
+async function copy(text){if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text)}else{var input=document.createElement('textarea');input.value=text;document.body.appendChild(input);input.select();document.execCommand('copy');input.remove()}}
+async function share(url,title){if(navigator.share){try{await navigator.share({title:title||'My digital business card',url:url});return}catch(e){if(e.name==='AbortError')return}}await copy(url)}
+by('year').textContent=new Date().getFullYear();
+var cardId=new URLSearchParams(location.search).get('card');
+if(cardId){visible('gate',false);visible('viewer',true);by('headline').textContent='Digital business card';by('intro').textContent='View the contact details below or save them to your contacts.';visible('benefits',false);var m=document.createElement('meta');m.name='robots';m.content='noindex,nofollow';document.head.append(m);api('/public/'+encodeURIComponent(cardId),'GET').then(function(r){viewCard=r.card;render(viewCard,by('publicCard'));document.title=(viewCard.name||'Contact')+' | Digital business card'}).catch(function(e){notice('viewerNotice',e.message,'error')})}
+else{visible('gate',true);visible('viewer',false)}
+by('unlockForm').addEventListener('submit',async function(e){e.preventDefault();by('unlockButton').disabled=true;try{var entered=val('accessCode').toUpperCase(),result=await api('/creator/unlock','POST',{code:entered});code=entered;visible('gate',false);visible('editor',true);putCard(result.card);if(result.card_id){shareUrl='https://pexolumastudio.com/digital-business-cards.html?card='+encodeURIComponent(result.card_id);by('shareLink').value=shareUrl;visible('savedOptions',true)}else visible('savedOptions',false)}catch(err){notice('gateNotice',err.message,'error')}finally{by('unlockButton').disabled=false}});
+by('cardForm').addEventListener('input',refresh);by('cardForm').addEventListener('change',refresh);
+by('cardForm').addEventListener('submit',async function(e){e.preventDefault();by('saveButton').disabled=true;notice('editorNotice','Saving your card...');try{var result=await api('/creator/save','POST',{code:code,card:getCard()});shareUrl=result.share_url;by('shareLink').value=shareUrl;visible('savedOptions',true);notice('editorNotice','Saved! Your read-only card link is ready to share.','success')}catch(err){notice('editorNotice',err.message,'error')}finally{by('saveButton').disabled=false}});
+by('lockButton').onclick=function(){code='';shareUrl='';by('accessCode').value='';notice('editorNotice','');visible('savedOptions',false);visible('editor',false);visible('gate',true)};
+by('copyLink').onclick=async function(){try{await copy(shareUrl);notice('editorNotice','Link copied!','success')}catch(e){notice('editorNotice','Select and copy the link in the box above.')}};
+by('openLink').onclick=function(){if(shareUrl)window.open(shareUrl,'_blank','noopener')};
+by('shareFromEditor').onclick=function(){if(shareUrl)share(shareUrl,'My digital business card')};
+by('shareCard').onclick=function(){share(location.href,viewCard?.name||'Digital business card')};
+by('copyPublicLink').onclick=async function(){try{await copy(location.href);notice('viewerNotice','Card link copied!','success')}catch(e){notice('viewerNotice','Copy the URL from your browser instead.')}};
+by('downloadVcard').onclick=function(){if(!viewCard){notice('viewerNotice','Card is still loading.');return}var blob=new Blob([vcard(viewCard)],{type:'text/vcard;charset=utf-8'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=(viewCard.name||'contact').replace(/[^a-z0-9-_ ]/gi,'').replace(/ +/g,'-')+'.vcf';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},1500)};
+render({name:'Your Name',business:'Your Business',title:'Your Position',theme:'midnight',color:'#c8fb7b'},by('editorCard'));
+})();
+</script>
+</body></html>
