@@ -24,7 +24,7 @@ button{width:100%;border:0;border-radius:12px;background:var(--lime);color:#1017
 <main class="wrap">
 <div class="eyebrow">Pexoluma Studio · Secure order request</div>
 <h1>Let's get your order started.</h1>
-<p class="intro">Enter your details below. For physical products, your delivery address is collected now and saved with your order so it is ready for fulfilment.</p>
+<p class="intro">Enter your details below. Once your order is saved, you'll be taken to SumUp's secure payment page to pay.</p>
 <div class="layout">
 <form class="panel" id="orderForm">
 <h2>Your order</h2>
@@ -49,8 +49,8 @@ button{width:100%;border:0;border-radius:12px;background:var(--lime);color:#1017
 <label for="customer_email">Email address</label><input id="customer_email" name="customer_email" type="email" autocomplete="email" required maxlength="254">
 <label for="customer_phone">Phone number (optional)</label><input id="customer_phone" name="customer_phone" type="tel" autocomplete="tel" maxlength="40">
 </div>
-<button id="submitButton" type="submit">Submit order request</button>
-<p class="note">Your total is calculated by our server. Submitting this form does not charge your card. We will show your order reference once it has been saved.</p>
+<button id="submitButton" type="submit">Continue to secure payment</button>
+<p class="note">Your total is calculated by our server. You'll complete payment securely on SumUp before your order is confirmed.</p>
 <div id="result" aria-live="polite"></div>
 </form>
 <aside class="panel summary">
@@ -69,7 +69,11 @@ button{width:100%;border:0;border-radius:12px;background:var(--lime);color:#1017
  const names={google_review_nfc:"Google Review NFC Card",qr_menu:"QR Code Menu",digital_business_card:"Digital Business Card"};
  const product=document.getElementById("product"),qty=document.getElementById("quantity"),address=document.getElementById("addressFields");
  const summaryProduct=document.getElementById("summaryProduct"),summaryQuantity=document.getElementById("summaryQuantity"),summaryTotal=document.getElementById("summaryTotal"),summaryAddress=document.getElementById("summaryAddress");
- const form=document.getElementById("orderForm"),button=document.getElementById("submitButton"),result=document.getElementById("result");\n const requestedProduct=new URLSearchParams(location.search).get("product");if(requestedProduct&&Object.prototype.hasOwnProperty.call(prices,requestedProduct))product.value=requestedProduct;
+ const form=document.getElementById("orderForm"),button=document.getElementById("submitButton"),result=document.getElementById("result");
+ const params=new URLSearchParams(location.search);
+ const paymentReturn=params.get("payment_return")==="1",returnedOrder=params.get("order");
+ const requestedProduct=params.get("product");
+ if(requestedProduct&&Object.prototype.hasOwnProperty.call(prices,requestedProduct))product.value=requestedProduct;
  function pounds(p){return "£"+(p/100).toFixed(2)}
  function refresh(){
   const physical=product.value==="google_review_nfc",n=Math.max(1,Math.min(50,Number(qty.value)||1));
@@ -79,17 +83,48 @@ button{width:100%;border:0;border-radius:12px;background:var(--lime);color:#1017
   summaryAddress.textContent=physical?"Delivery address required.":"This is a digital product; no delivery address is needed.";
  }
  product.addEventListener("change",refresh);qty.addEventListener("input",refresh);refresh();
+
+ if(paymentReturn&&returnedOrder){
+  button.disabled=true;button.textContent="Checking payment…";
+  form.querySelectorAll("input,select").forEach(el=>el.disabled=true);
+  result.innerHTML='<div class="result"><strong>Thank you — checking your payment.</strong><p class="muted">Please keep this page open for a moment while we confirm the payment directly with SumUp.</p></div>';
+  fetch("https://gquuoabsmfjroswckzka.supabase.co/functions/v1/verify-sumup-payment",{
+   method:"POST",headers:{"Content-Type":"application/json","apikey":"sb_publishable_yjZ1fDtVIWfwjJazteKWsQ_Yxl2-bGK"},body:JSON.stringify({order_id:returnedOrder})
+  }).then(async response=>{
+   const data=await response.json();if(!response.ok)throw new Error(data.error||"We couldn't confirm the payment yet.");
+   if(data.payment_status==="paid"){
+    result.innerHTML='<div class="result"><strong>Payment confirmed — thank you!</strong><p>Your order reference is <strong>'+String(returnedOrder).replace(/[<>&"]/g,"")+'</strong>.</p><p class="muted">Your payment has been verified by SumUp. Pexoluma Studio will process your order.</p></div>';
+    button.textContent="Payment confirmed";
+   }else if(data.payment_status==="failed"){
+    result.innerHTML='<div class="result"><strong>Payment was not completed.</strong><p class="muted">Please contact Pexoluma Studio if you need help completing your order.</p><p>Order reference: <strong>'+String(returnedOrder).replace(/[<>&"]/g,"")+'</strong></p></div>';
+    button.disabled=false;button.textContent="Return to products";
+    button.onclick=()=>location.href="products.html";
+   }else{
+    result.innerHTML='<div class="result"><strong>Your payment is still processing.</strong><p class="muted">SumUp has not yet confirmed the final status. Please refresh this page in a moment. Your order reference is '+String(returnedOrder).replace(/[<>&"]/g,"")+'.</p></div>';
+    button.disabled=false;button.textContent="Check payment again";
+    button.onclick=()=>location.reload();
+   }
+  }).catch(err=>{
+   result.innerHTML='<div class="result"><strong>We are still checking your payment.</strong><p class="muted">'+String(err.message||"Please refresh in a moment.").replace(/[<>&"]/g,"")+'</p><p>Order reference: '+String(returnedOrder).replace(/[<>&"]/g,"")+'</p></div>';
+   button.disabled=false;button.textContent="Check payment again";button.onclick=()=>location.reload();
+  });
+  return;
+ }
+
  form.addEventListener("submit",async e=>{
-  e.preventDefault();result.innerHTML="";button.disabled=true;button.textContent="Submitting…";
+  e.preventDefault();result.innerHTML="";button.disabled=true;button.textContent="Creating secure checkout…";
   const fd=new FormData(form),payload=Object.fromEntries(fd.entries());payload.product_key=payload.product;delete payload.product;payload.quantity=Number(payload.quantity);
   try{
    const response=await fetch("https://gquuoabsmfjroswckzka.supabase.co/functions/v1/create-order",{
     method:"POST",headers:{"Content-Type":"application/json","apikey":"sb_publishable_yjZ1fDtVIWfwjJazteKWsQ_Yxl2-bGK"},body:JSON.stringify(payload)
    });
    const data=await response.json();if(!response.ok)throw new Error(data.error||"We couldn't submit your order.");
-   result.innerHTML='<div class="result"><strong>Order request received</strong><p>Your reference is <strong>'+String(data.order_id).replace(/[<>&"]/g,"")+'</strong>.</p><p class="muted">Your order has been saved with your contact details'+(product.value==="google_review_nfc"?" and delivery address":"")+'. Payment is not taken yet. Pexoluma Studio will provide payment instructions after the secure checkout is connected.</p></div>';
-   button.textContent="Order request submitted";form.querySelectorAll("input,select").forEach(el=>el.disabled=true);
-  }catch(err){result.innerHTML='<p class="error" role="alert">'+String(err.message||"Please try again.").replace(/[<>&"]/g,"")+'</p>';button.disabled=false;button.textContent="Submit order request"}
+   if(!data.checkout_url)throw new Error("Your order was saved, but SumUp did not return a payment link. Please contact us with reference "+data.order_id+".");
+   const checkoutUrl=new URL(data.checkout_url);
+   if(checkoutUrl.hostname!=="checkout.sumup.com")throw new Error("The secure payment link could not be validated.");
+   button.textContent="Opening SumUp securely…";
+   location.assign(checkoutUrl.href);
+  }catch(err){result.innerHTML='<p class="error" role="alert">'+String(err.message||"Please try again.").replace(/[<>&"]/g,"")+'</p>';button.disabled=false;button.textContent="Continue to secure payment";}
  });
 })();
 </script>
