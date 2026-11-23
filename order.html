@@ -69,7 +69,7 @@ button{width:100%;border:0;border-radius:12px;background:var(--lime);color:#1017
  const names={google_review_nfc:"Google Review NFC Card",qr_menu:"QR Code Menu",digital_business_card:"Digital Business Card"};
  const product=document.getElementById("product"),qty=document.getElementById("quantity"),address=document.getElementById("addressFields");
  const summaryProduct=document.getElementById("summaryProduct"),summaryQuantity=document.getElementById("summaryQuantity"),summaryTotal=document.getElementById("summaryTotal"),summaryAddress=document.getElementById("summaryAddress");
- const form=document.getElementById("orderForm"),button=document.getElementById("submitButton"),result=document.getElementById("result");
+ const form=document.getElementById("orderForm"),button=document.getElementById("submitButton"),result=document.getElementById("result");\n const requestedProduct=new URLSearchParams(location.search).get("product");if(requestedProduct&&Object.prototype.hasOwnProperty.call(prices,requestedProduct))product.value=requestedProduct;
  function pounds(p){return "£"+(p/100).toFixed(2)}
  function refresh(){
   const physical=product.value==="google_review_nfc",n=Math.max(1,Math.min(50,Number(qty.value)||1));
