@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#090d18"><title>Admin Setup | Pexoluma Studio</title>
+<style>
+:root{--bg:#090d18;--panel:#111827;--ink:#f4f6f8;--muted:#aab5c5;--line:#293548;--lime:#c8fb7b}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif}.wrap{width:min(760px,calc(100% - 34px));margin:7vh auto}.panel{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:28px}.eyebrow{color:var(--lime);font-size:.75rem;font-weight:850;letter-spacing:.15em;text-transform:uppercase}h1{font-size:2.5rem;line-height:1.05;letter-spacing:-.06em;margin:12px 0}p{color:var(--muted)}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#080d17;border:1px solid var(--line);border-radius:12px;padding:18px;color:#e9f1df;font-size:.85rem}.btn{display:inline-block;padding:12px 16px;border-radius:10px;background:var(--lime);color:#10170e;font-weight:900;border:0;cursor:pointer}.small{font-size:.8rem;color:#8997aa}.steps{padding-left:22px;color:var(--muted)}a{color:var(--lime)}
+</style></head><body><main class="wrap"><section class="panel"><div class="eyebrow">Private staff area · first-time setup</div><h1>Set up your admin PIN.</h1><p>The admin username is <strong style="color:white">headadmin</strong>. Choose a new 6–12 digit PIN that is not used for your church register or any other account.</p>
+<ol class="steps"><li>Open your <a href="https://supabase.com/dashboard/project/gquuoabsmfjroswckzka" target="_blank" rel="noopener">Pexoluma Supabase project</a>.</li><li>Open SQL Editor and start a new query.</li><li>Paste the SQL below and replace the placeholder with your own PIN. Do not send the PIN to anyone.</li><li>Run it once, then remove the PIN from the saved SQL query/history if the dashboard offers that option.</li><li>Return to <a href="admin.html">Admin Dashboard</a> and sign in as <strong style="color:white">headadmin</strong>.</li></ol>
+<pre id="sql">insert into public.pex_admin_credentials (id, username, pin_salt, pin_hash)
+values (
+  true,
+  'headadmin',
+  'bcrypt',
+  extensions.crypt('REPLACE_WITH_YOUR_PRIVATE_6_TO_12_DIGIT_PIN', extensions.gen_salt('bf', 12))
+)
+on conflict (id) do update
+set username = excluded.username,
+    pin_salt = excluded.pin_salt,
+    pin_hash = excluded.pin_hash;</pre>
+<button class="btn" id="copy">Copy setup SQL</button><p class="small">Only the one-way bcrypt hash is stored in the database. The SQL editor query may temporarily contain your chosen PIN, so do not share the query or a screenshot of it.</p><p><a href="admin.html">← Back to admin login</a></p></section></main>
+<script>document.getElementById("copy").addEventListener("click",async()=>{await navigator.clipboard.writeText(document.getElementById("sql").textContent);document.getElementById("copy").textContent="Copied"})</script></body></html>
