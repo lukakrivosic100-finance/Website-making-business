@@ -80,7 +80,8 @@ button{width:100%;border:0;border-radius:12px;background:var(--lime);color:#1017
   }).then(async response=>{
    const data=await response.json();if(!response.ok)throw new Error(data.error||"We couldn't confirm the payment yet.");
    if(data.payment_status==="paid"){
-    result.innerHTML='<div class="result"><strong>Payment confirmed — thank you!</strong><p>Your order reference is <strong>'+String(returnedOrder).replace(/[<>&"]/g,"")+'</strong>.</p><p class="muted">Your payment has been verified by SumUp. Pexoluma Studio will process your order.</p></div>';
+    result.innerHTML='<div class="result"><strong>Payment confirmed — thank you!</strong><p>Your order reference is <strong>'+String(returnedOrder).replace(/[<>&"]/g,"")+'</strong>.</p><p class="muted">Your payment has been verified by SumUp. Your order is confirmed.</p></div>';
+    if(product.value==="qr_menu" && data.menu_access_token){ location.replace("qr-menu-builder.html?access="+encodeURIComponent(data.menu_access_token)); return; }
     button.textContent="Payment confirmed";
    }else if(data.payment_status==="failed"){
     result.innerHTML='<div class="result"><strong>Payment was not completed.</strong><p class="muted">Please contact Pexoluma Studio if you need help completing your order.</p><p>Order reference: <strong>'+String(returnedOrder).replace(/[<>&"]/g,"")+'</strong></p></div>';
