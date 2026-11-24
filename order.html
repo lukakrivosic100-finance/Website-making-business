@@ -38,7 +38,7 @@ button{width:100%;border:0;border-radius:12px;background:var(--lime);color:#1017
 <h2>Your contact details</h2>
 <label for="customer_name">Full name</label><input id="customer_name" name="customer_name" autocomplete="name" required maxlength="120">
 <label for="customer_email">Email address</label><input id="customer_email" name="customer_email" type="email" autocomplete="email" required maxlength="254">
-<label for="customer_phone">Phone number (optional)</label><input id="customer_phone" name="customer_phone" type="tel" autocomplete="tel" maxlength="40">
+<label for="customer_phone">Mobile phone number *</label><input id="customer_phone" name="customer_phone" type="tel" autocomplete="tel" minlength="7" maxlength="40" placeholder="+44 7XXX XXXXXX" required>
 </div>
 <button id="submitButton" type="submit">Continue to secure payment</button>
 <p class="note">Your total is calculated by our server. You'll complete payment securely on SumUp before your order is confirmed.</p>
