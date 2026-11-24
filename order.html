@@ -30,19 +30,10 @@ button{width:100%;border:0;border-radius:12px;background:var(--lime);color:#1017
 <h2>Your order</h2>
 <label for="product">Choose a product</label>
 <select id="product" name="product" required>
-<option value="google_review_nfc">Google Review NFC Card — £15.00</option>
 <option value="qr_menu">QR Code Menu — £3.00</option>
 <option value="digital_business_card">Digital Business Card — £1.00</option>
 </select>
 <label for="quantity">Quantity</label><input id="quantity" name="quantity" type="number" min="1" max="50" value="1" required>
-<div class="address" id="addressFields">
-<h2>Delivery address</h2>
-<p class="muted">Required for the Google Review NFC Card.</p>
-<label for="address1">Address line 1</label><input id="address1" name="address_line1" autocomplete="address-line1">
-<label for="address2">Address line 2 (optional)</label><input id="address2" name="address_line2" autocomplete="address-line2">
-<div class="two"><div><label for="city">Town / city</label><input id="city" name="city" autocomplete="address-level2"></div><div><label for="postcode">Postcode</label><input id="postcode" name="postcode" autocomplete="postal-code"></div></div>
-<label for="country">Country</label><input id="country" name="country" value="United Kingdom" autocomplete="country-name">
-</div>
 <div class="address">
 <h2>Your contact details</h2>
 <label for="customer_name">Full name</label><input id="customer_name" name="customer_name" autocomplete="name" required maxlength="120">
@@ -57,18 +48,17 @@ button{width:100%;border:0;border-radius:12px;background:var(--lime);color:#1017
 <div class="eyebrow">Order summary</div><h2 style="margin-top:12px">Your selection</h2>
 <div class="line"><span id="summaryProduct">Google Review NFC Card</span><strong id="summaryQuantity">× 1</strong></div>
 <div class="line total"><span>Total</span><span class="price" id="summaryTotal">£15.00</span></div>
-<p class="muted" id="summaryAddress">Delivery address required.</p>
-<p class="note">Prices are in GBP. Any delivery charge will be confirmed before payment if applicable.</p>
+<p class="note">Prices are in GBP. This order form is for digital products only; physical NFC card purchases use our SumUp Store checkout.</p>
 </aside>
 </div>
 <p class="fine">Pexoluma Studio · <a href="terms.html" style="text-decoration:underline">Terms &amp; Conditions</a></p>
 </main>
 <script>
 (function(){
- const prices={google_review_nfc:1500,qr_menu:300,digital_business_card:100};
- const names={google_review_nfc:"Google Review NFC Card",qr_menu:"QR Code Menu",digital_business_card:"Digital Business Card"};
- const product=document.getElementById("product"),qty=document.getElementById("quantity"),address=document.getElementById("addressFields");
- const summaryProduct=document.getElementById("summaryProduct"),summaryQuantity=document.getElementById("summaryQuantity"),summaryTotal=document.getElementById("summaryTotal"),summaryAddress=document.getElementById("summaryAddress");
+ const prices={qr_menu:300,digital_business_card:100};
+ const names={qr_menu:"QR Code Menu",digital_business_card:"Digital Business Card"};
+ const product=document.getElementById("product"),qty=document.getElementById("quantity");
+ const summaryProduct=document.getElementById("summaryProduct"),summaryQuantity=document.getElementById("summaryQuantity"),summaryTotal=document.getElementById("summaryTotal");
  const form=document.getElementById("orderForm"),button=document.getElementById("submitButton"),result=document.getElementById("result");
  const params=new URLSearchParams(location.search);
  const paymentReturn=params.get("payment_return")==="1",returnedOrder=params.get("order");
@@ -76,11 +66,8 @@ button{width:100%;border:0;border-radius:12px;background:var(--lime);color:#1017
  if(requestedProduct&&Object.prototype.hasOwnProperty.call(prices,requestedProduct))product.value=requestedProduct;
  function pounds(p){return "£"+(p/100).toFixed(2)}
  function refresh(){
-  const physical=product.value==="google_review_nfc",n=Math.max(1,Math.min(50,Number(qty.value)||1));
-  address.classList.toggle("hidden",!physical);
-  ["address1","city","postcode","country"].forEach(id=>{document.getElementById(id).required=physical});
+  const n=Math.max(1,Math.min(50,Number(qty.value)||1));
   summaryProduct.textContent=names[product.value];summaryQuantity.textContent="× "+n;summaryTotal.textContent=pounds(prices[product.value]*n);
-  summaryAddress.textContent=physical?"Delivery address required.":"This is a digital product; no delivery address is needed.";
  }
  product.addEventListener("change",refresh);qty.addEventListener("input",refresh);refresh();
 
